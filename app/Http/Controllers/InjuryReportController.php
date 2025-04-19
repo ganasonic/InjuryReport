@@ -266,7 +266,7 @@ class InjuryReportController extends Controller
         //$injuryreport->injury_type_other_2 = $request->input('injury_type_other_2');
         //$injuryreport->side_2 = $request->input('side_2');
         $injuryreport->specific_diagnosis = $request->input('specific_diagnosis');
-        $injuryreport->medical_certificate_path = $medical_certificate_file?$medical_certificate_file->getClientOriginalName();   //ファイル名を取得
+        $injuryreport->medical_certificate_path = $medical_certificate_file?$medical_certificate_file->getClientOriginalName():"";   //ファイル名を取得
         $injuryreport->diagnosing_doctor = $request->input('diagnosing_doctor');
         $injuryreport->doctor_affiliation = $request->input('doctor_affiliation');
         $injuryreport->doctor_email_of_telno = $request->input('doctor_email_of_telno');
@@ -443,7 +443,11 @@ class InjuryReportController extends Controller
         $video_file_path = session('video_file');
         //ddd([$video_file_path, $medical_certificate_path]);
 
+	if ($injuryreport->consultation != 1 ){
+		$medical_certificate_path = "";
+	}
         if ($medical_certificate_path) {
+//dd($medical_certificate_path);
             // ファイルを移動
             $filename = basename($medical_certificate_path);
             //ddd([$filename, $medical_certificate_path,$injuryreport->medical_certificate_path]);
